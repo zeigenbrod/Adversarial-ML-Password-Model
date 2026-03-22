@@ -1,0 +1,4 @@
+*.safetensors filter=lfs diff=lfs merge=lfs -text
+*.pt filter=lfs diff=lfs merge=lfs -text
+gpt2-passwords/checkpoint-26/*.safetensors filter=lfs diff=lfs merge=lfs -text
+gpt2-passwords/checkpoint-26/*.pt filter=lfs diff=lfs merge=lfs -text
