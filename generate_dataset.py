@@ -6,7 +6,7 @@ import urllib.request
 from zxcvbn import zxcvbn
 from collections import Counter
 
-# ── Wordlist ──────────────────────────────────────────────────────────────────
+# Wordlist
 WORDLIST_FILE = "password_words.txt"
 WORDLIST_URLS = [
     "https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/100k-most-used-passwords-NCSC.txt",
@@ -39,13 +39,13 @@ with open(WORDLIST_FILE, encoding="utf-8", errors="ignore") as f:
 words = list(raw_words)
 print(f"Loaded {len(words)} base words")
 
-# ── Leet substitution map ─────────────────────────────────────────────────────
+# Leet substitution map 
 LEET = {'a': '@', 'e': '3', 'i': '1', 'o': '0', 's': '$', 't': '7'}
 
 def leet(w):
     return ''.join(LEET.get(c, c) for c in w)
 
-# ── Password generator ────────────────────────────────────────────────────────
+# Password generator 
 def gen_candidate():
     w = random.choice(words)
     pattern = random.choices([
@@ -56,24 +56,29 @@ def gen_candidate():
         "leet_word_num",
         "word_special",
         "cap_leet_num_special",
-    ], weights=[5, 10, 15, 10, 15, 15, 30])[0]
+    ], weights=[5, 10, 20, 10, 20, 20, 15])[0] 
 
     if pattern == "word":
-        return w
+        result = w
     elif pattern == "word_num":
-        return w + str(random.randint(100, 9999))
+        result = w + str(random.randint(100, 9999))
     elif pattern == "cap_word_num":
-        return w.capitalize() + str(random.randint(100, 9999))
+        result = w.capitalize() + str(random.randint(100, 9999))
     elif pattern == "leet_word":
-        return leet(w)
+        result = leet(w)
     elif pattern == "leet_word_num":
-        return leet(w) + str(random.randint(10, 999))
+        result = leet(w) + str(random.randint(10, 999))
     elif pattern == "word_special":
-        return w + random.choice(['!', '@', '#', '$', '&'])
+        result = w + random.choice(['!', '@', '#', '$', '&'])
     elif pattern == "cap_leet_num_special":
-        return leet(w.capitalize()) + str(random.randint(10, 99)) + random.choice(['!', '@', '#'])
-
-# ── Crackability heuristic ────────────────────────────────────────────────────
+        result = leet(w.capitalize()) + str(random.randint(10, 99)) + random.choice(['!', '@', '#'])
+    else:
+        return None
+    
+    if len(result) < 6 or len(result) > 14:
+        return None
+    return result
+# Crackability heuristic 
 LEET_REVERSE = {'@': 'a', '3': 'e', '1': 'i', '0': 'o', '$': 's', '7': 't'}
 
 def is_rule_crackable(pwd):
@@ -81,7 +86,7 @@ def is_rule_crackable(pwd):
     base = re.sub(r'[^a-z]', '', base)
     return len(base) >= 4
 
-# ── Main generation loop ──────────────────────────────────────────────────────
+# Main generation loop
 ADVERSARIAL_TARGET = 10000
 MAX_ATTEMPTS = 50000
 
@@ -122,7 +127,7 @@ while adversarial_count < ADVERSARIAL_TARGET and attempts < MAX_ATTEMPTS:
     except Exception as e:
         print(f"Skipped '{pwd}': {e}")
 
-# ── Save outputs ──────────────────────────────────────────────────────────────
+# Save outputs
 
 # Full labeled dataset for analysis
 with open("labeled_passwords.json", "w") as f:
@@ -134,7 +139,7 @@ with open("adversarial_dataset_10k.txt", "w") as f:
     for entry in adversarial_only:
         f.write(f"<|pwd|> {entry['password']}\n")
 
-# ── Summary ───────────────────────────────────────────────────────────────────
+# Summary 
 score_dist = Counter(e['zxcvbn_score'] for e in dataset)
 print(f"\n{'='*50}")
 print(f"GENERATION SUMMARY")
