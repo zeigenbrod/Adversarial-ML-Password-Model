@@ -1,0 +1,109 @@
+{
+  "baseline": {
+    "total": 377186,
+    "score_distribution": {
+      "0": 36282,
+      "1": 283671,
+      "2": 47233,
+      "3": 10000
+    },
+    "score_distribution_pct": {
+      "0": 9.6,
+      "1": 75.2,
+      "2": 12.5,
+      "3": 2.7
+    },
+    "adversarial_count": 10000,
+    "adversarial_rate_pct": 2.7,
+    "avg_guesses_log10": 4.602,
+    "avg_zxcvbn_score": 1.082
+  },
+  "baseline_patterns": {
+    "leet+num+special": {
+      "count": 66465,
+      "adversarial_count": 3093,
+      "adversarial_rate_pct": 4.7,
+      "avg_score": 1.24
+    },
+    "leet+num": {
+      "count": 91981,
+      "adversarial_count": 2364,
+      "adversarial_rate_pct": 2.6,
+      "avg_score": 1.11
+    },
+    "leet_only": {
+      "count": 53056,
+      "adversarial_count": 1273,
+      "adversarial_rate_pct": 2.4,
+      "avg_score": 1.12
+    },
+    "word_only": {
+      "count": 165684,
+      "adversarial_count": 3270,
+      "adversarial_rate_pct": 2.0,
+      "avg_score": 0.99
+    }
+  },
+  "baseline_top_adversarial": [
+    {
+      "password": "la0b1denko",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "aztyvlk@z3",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "cippalippa",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "yeu3mnhi3u",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "$1m@kov3vg",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "s1mak0v3vg",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "jeetkunedo",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "cioccolato",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "valk3nh@yn",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "jiushiaini",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    }
+  ]
+}

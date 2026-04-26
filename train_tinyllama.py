@@ -25,7 +25,7 @@ tokenizer.add_special_tokens({"additional_special_tokens": ["<|pwd|>"]})
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
     device_map=None
-).to("mps")
+).to("cpu")
 
 model.resize_token_embeddings(len(tokenizer), mean_resizing=False)
 # LoRA config
