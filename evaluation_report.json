@@ -1,0 +1,115 @@
+{
+  "baseline": {
+    "total": 50000,
+    "score_distribution": {
+      "0": 909,
+      "1": 30596,
+      "2": 15830,
+      "3": 2665
+    },
+    "score_distribution_pct": {
+      "0": 1.8,
+      "1": 61.2,
+      "2": 31.7,
+      "3": 5.3
+    },
+    "adversarial_count": 2665,
+    "adversarial_rate_pct": 5.3,
+    "avg_guesses_log10": 5.689,
+    "avg_zxcvbn_score": 1.405
+  },
+  "baseline_patterns": {
+    "leet+num+special": {
+      "count": 13507,
+      "adversarial_count": 870,
+      "adversarial_rate_pct": 6.4,
+      "avg_score": 1.54
+    },
+    "leet+num": {
+      "count": 21369,
+      "adversarial_count": 1017,
+      "adversarial_rate_pct": 4.8,
+      "avg_score": 1.42
+    },
+    "leet_only": {
+      "count": 2260,
+      "adversarial_count": 178,
+      "adversarial_rate_pct": 7.9,
+      "avg_score": 1.4
+    },
+    "word+num": {
+      "count": 5467,
+      "adversarial_count": 129,
+      "adversarial_rate_pct": 2.4,
+      "avg_score": 1.3
+    },
+    "word_only": {
+      "count": 7397,
+      "adversarial_count": 471,
+      "adversarial_rate_pct": 6.4,
+      "avg_score": 1.21
+    }
+  },
+  "baseline_top_adversarial": [
+    {
+      "password": "k0ro$tel3v",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "klubnichka",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "d3$1d3r@ta",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "sag1ttario",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "cippalippa",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "regenbog3n",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "@sa$as@sas",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "v1v@laf1g@",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "ser3gjv1ch",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    },
+    {
+      "password": "jiushi@1ni",
+      "zxcvbn_score": 3,
+      "guesses_log10": 10.0,
+      "is_adversarial_candidate": true
+    }
+  ]
+}
