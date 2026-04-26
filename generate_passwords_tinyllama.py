@@ -3,9 +3,8 @@ from peft import PeftModel
 from zxcvbn import zxcvbn
 import torch
 
-# =========================
+
 # Load base + tokenizer
-# =========================
 base_model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
 tokenizer = AutoTokenizer.from_pretrained("./tinyllama-lora-passwords")
@@ -19,9 +18,8 @@ base_model = AutoModelForCausalLM.from_pretrained(
 
 base_model.resize_token_embeddings(len(tokenizer))
 
-# =========================
+
 # Load LoRA
-# =========================
 model = PeftModel.from_pretrained(
     base_model,
     "./tinyllama-lora-passwords",
@@ -30,16 +28,14 @@ model = PeftModel.from_pretrained(
 
 model.eval()
 
-# =========================
+
 # Clean output
-# =========================
 def clean_password(p):
     p = p.replace("<|pwd|>", "").strip()
     return p[:12]  # enforce max length
 
-# =========================
+
 # Generate password
-# =========================
 def generate_password():
     inputs = tokenizer("<|pwd|>", return_tensors="pt").to(model.device)
 
@@ -57,16 +53,14 @@ def generate_password():
     text = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return clean_password(text)
 
-# =========================
+
 # Evaluate password
-# =========================
 def evaluate_password(p):
     result = zxcvbn(p)
     return result["score"], result["guesses"]
 
-# =========================
+
 # Main loop
-# =========================
 def test_generated_passwords(n=25):
     for _ in range(n):
         p = generate_password()
@@ -79,17 +73,13 @@ def test_generated_passwords(n=25):
         try:
             score, guesses = evaluate_password(p)
 
-            if score == 4 and guesses < 1e8:
-                print(f"ADVERSARIAL: {p} → Score: {score}/4 | Guesses: {guesses}")
-            else:
-                print(f"{p} → Score: {score}/4 | Guesses: {guesses}")
+           
+            print(f"{p} → Score: {score}/4 | Guesses: {guesses}")
 
         except Exception:
             print(f"Skipped invalid password: {p}")
 
         print("-" * 40)
 
-# =========================
 # Run 
-# =========================
 test_generated_passwords(50)

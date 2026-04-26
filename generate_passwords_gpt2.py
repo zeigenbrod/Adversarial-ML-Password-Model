@@ -3,9 +3,8 @@ from zxcvbn import zxcvbn
 import re
 import torch
 
-# =========================
+
 # Load model + tokenizer
-# =========================
 tokenizer = GPT2Tokenizer.from_pretrained("./gpt2-passwords")
 model = GPT2LMHeadModel.from_pretrained("./gpt2-passwords")
 
@@ -18,9 +17,8 @@ def clean_password(p):
     return p[:12]  # enforce adversarial length cap
 
 
-# =========================
+
 # Generate password
-# =========================
 def generate_password():
     inputs = tokenizer("<|pwd|>", return_tensors="pt")
 
@@ -41,17 +39,13 @@ def generate_password():
 
 
 
-# =========================
 # Evaluate password
-# =========================
 def evaluate_password(p):
     result = zxcvbn(p)
     return result["score"], result["guesses"]
 
 
-# =========================
 # Main loop
-# =========================
 def test_generated_passwords(n=20):
     for _ in range(n):
 
@@ -68,9 +62,7 @@ def test_generated_passwords(n=20):
         try:
             score, guesses = evaluate_password(p)
 
-            # =========================
             # ADVERSARIAL FILTER
-            # =========================
             if score == 4 and guesses < 1e8:
                 print(f"ADVERSARIAL: {p} → Score: {score}/4 | Guesses: {guesses}")
             else:
@@ -82,7 +74,5 @@ def test_generated_passwords(n=20):
         print("-" * 40)
 
 
-# =========================
 # Run
-# =========================
 test_generated_passwords(50)
