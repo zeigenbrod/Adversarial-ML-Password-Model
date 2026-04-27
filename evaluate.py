@@ -51,7 +51,7 @@ def compute_stats(results):
 
 
 def pattern_breakdown(results):
-    """attempt to classify passwords by pattern type and report adversarial rate per pattern. works on both the baseline and GPT-2 output."""
+    """attempt to classify passwords by pattern type and report adversarial rate per pattern. works on both the baseline and Tiny LLaMA output."""
     import re
     patterns = {
         "leet+num+special": [],
@@ -149,7 +149,7 @@ def main():
     parser.add_argument("--baseline", default="labeled_passwords.json",
                         help="Path to baseline labeled_passwords.json")
     parser.add_argument("--generated", default=None,
-                        help="Path to GPT-2 generated passwords (.txt, one per line)")
+                        help="Path to Tiny LLaMA generated passwords (.txt, one per line)")
     args = parser.parse_args()
 
     report = {}
@@ -184,9 +184,9 @@ def main():
         print(f"  {r['password']:<20} {r['zxcvbn_score']:>6}  {r['guesses_log10']:>14.3f}  {fb}")
     report["baseline_top_adversarial"] = top_baseline
 
-    # GPT-2 evaluation
+    # Tiny LLaMA evaluation
     if args.generated:
-        print_section("GPT-2 Generated Password Evaluation")
+        print_section("Tiny LLaMA Generated Password Evaluation")
 
         try:
             with open(args.generated) as f:
@@ -199,16 +199,16 @@ def main():
         if raw_passwords:
             generated_results = score_passwords(raw_passwords)
             generated_stats = compute_stats(generated_results)
-            print_stats("GPT-2 Generated Passwords", generated_stats)
+            print_stats("Tiny LLaMA Generated Passwords", generated_stats)
             report["generated"] = generated_stats
 
             generated_patterns = pattern_breakdown(generated_results)
-            print_section("GPT-2 Pattern Breakdown")
+            print_section("Tiny LLaMA Pattern Breakdown")
             print_pattern_table(generated_patterns)
             report["generated_patterns"] = generated_patterns
 
             top_generated = top_adversarial_examples(generated_results)
-            print_section("GPT-2 Top 10 Adversarial Canidates")
+            print_section("Tiny LLaMA Top 10 Adversarial Canidates")
             print(f"\n  {'Password':<20} {'Score':>6}  {'log10 Guesses':>14}  {'Feedback'}")
             print(f"  {'─'*20} {'─'*6}  {'─'*14}  {'─'*30}")
             for r in top_generated:
@@ -216,21 +216,21 @@ def main():
             report["generated_top_adversarial"] = top_generated
 
             # head-to-head comparison
-            print_section("head-to-head Comparison: Baseline vs GPT-2")
+            print_section("head-to-head Comparison: Baseline vs Tiny LLaMA")
             b = baseline_stats
             g = generated_stats
             delta_fool = round(g["adversarial_rate_pct"] - b["adversarial_rate_pct"], 1)
             delta_score = round(g["avg_zxcvbn_score"] - b["avg_zxcvbn_score"], 3)
             delta_log10 = round(g["avg_guesses_log10"] - b["avg_guesses_log10"], 3)
 
-            print(f"\n  {'Metric':<30} {'Baseline':>10}  {'GPT-2':>10}  {'Delta':>10}")
+            print(f"\n  {'Metric':<30} {'Baseline':>10}  {'Tiny LLaMA':>10}  {'Delta':>10}")
             print(f"  {'─'*30} {'─'*10}  {'─'*10}  {'─'*10}")
             print(f"  {'Adversarial rate (%)':<30} {b['adversarial_rate_pct']:>10}  {g['adversarial_rate_pct']:>10}  {delta_fool:>+10.1f}")
             print(f"  {'Avg zxcvbn score':<30} {b['avg_zxcvbn_score']:>10}  {g['avg_zxcvbn_score']:>10}  {delta_score:>+10.3f}")
             print(f"  {'Avg guesses (log10)':<30} {b['avg_guesses_log10']:>10}  {g['avg_guesses_log10']:>10}  {delta_log10:>+10.3f}")
 
             verdict = "IMPROVED" if delta_fool > 0 else "NO IMPROVEMENT" if delta_fool == 0 else "DECLINED"
-            print(f"\n  Verdict: GPT-2 fool rate {verdict} vs baseline ({delta_fool:+.1f}%)")
+            print(f"\n  Verdict: Tiny LLaMA fool rate {verdict} vs baseline ({delta_fool:+.1f}%)")
             report["comparison"] = {
                 "delta_adversarial_rate_pct": delta_fool,
                 "delta_avg_score": delta_score,
