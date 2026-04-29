@@ -1,17 +1,10 @@
-from transformers import (
-    AutoTokenizer,
-    AutoModelForCausalLM,
-    Trainer,
-    TrainingArguments,
-    DataCollatorForLanguageModeling
-)
+from transformers import (AutoTokenizer, AutoModelForCausalLM, Trainer, TrainingArguments, DataCollatorForLanguageModeling)
 from datasets import load_dataset
 from peft import LoraConfig, get_peft_model, TaskType
 import torch
 
 # Load dataset
 dataset = load_dataset("text", data_files={"train": "adversarial_dataset_10k.txt"})
-
 
 # Tokenizer
 tokenizer = AutoTokenizer.from_pretrained("TinyLlama/TinyLlama-1.1B-Chat-v1.0")
