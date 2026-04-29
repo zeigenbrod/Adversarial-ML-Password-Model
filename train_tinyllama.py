@@ -12,11 +12,9 @@ import torch
 # Load dataset
 dataset = load_dataset("text", data_files={"train": "adversarial_dataset_10k.txt"})
 
-# Model name
-model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
 # Tokenizer
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained("TinyLlama/TinyLlama-1.1B-Chat-v1.0")
 tokenizer.pad_token = tokenizer.eos_token
 
 tokenizer.add_special_tokens({"additional_special_tokens": ["<|pwd|>"]})
@@ -28,7 +26,8 @@ model = AutoModelForCausalLM.from_pretrained(
 ).to("cpu")
 
 model.resize_token_embeddings(len(tokenizer), mean_resizing=False)
-# LoRA config
+
+#adaption configuration
 lora_config = LoraConfig(
     r=16,
     lora_alpha=32,
@@ -94,7 +93,7 @@ trainer = Trainer(
 # Train
 trainer.train()
 
-# save LoRA adapter
+# save adapter
 model.save_pretrained("./tinyllama-lora-passwords")
 tokenizer.save_pretrained("./tinyllama-lora-passwords")
 
