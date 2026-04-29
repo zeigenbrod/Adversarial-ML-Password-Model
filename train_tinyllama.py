@@ -20,10 +20,7 @@ tokenizer.pad_token = tokenizer.eos_token
 tokenizer.add_special_tokens({"additional_special_tokens": ["<|pwd|>"]})
 
 # Model
-model = AutoModelForCausalLM.from_pretrained(
-    model_name,
-    device_map=None
-).to("cpu")
+model = AutoModelForCausalLM.from_pretrained("TinyLlama/TinyLlama-1.1B-Chat-v1.0", device_map=None).to("cpu")
 
 model.resize_token_embeddings(len(tokenizer), mean_resizing=False)
 
