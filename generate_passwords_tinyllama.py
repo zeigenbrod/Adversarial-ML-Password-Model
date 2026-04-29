@@ -4,20 +4,19 @@ from zxcvbn import zxcvbn
 import torch
 
 # Load base + tokenizer
-base_model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
 tokenizer = AutoTokenizer.from_pretrained("./tinyllama-lora-passwords")
 tokenizer.pad_token = tokenizer.eos_token
 
 base_model = AutoModelForCausalLM.from_pretrained(
-    base_model_name,
+    "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
     dtype=torch.float16,   
     device_map="auto"
 )
 
 base_model.resize_token_embeddings(len(tokenizer), mean_resizing=False)
 
-# Load LoRA
+# Load Adapter
 model = PeftModel.from_pretrained(
     base_model,
     "./tinyllama-lora-passwords",
