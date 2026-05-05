@@ -1,23 +1,23 @@
 # Adversarial ML Password Model
 
 
-This repository contains the first draft of a (kind of) trained GPT-2 LLM model that generates passwords from a word data set that contains the top 10000 most used English words. I decided on just a small data set of words at first to target the first part of our dataset design, weak passwords that can be found in the dictionary with no special characters. Works with a-z A-Z and 0-9. Has a very basic training file as well as a script that generates passwords with GPT-2 and runs through zxcvbn.
+This repository contains the first draft of a trained LLM model that generates passwords from a word data set that contains the most used passwords in the world. We then modify those passwords and try to score a 3 or above on the zxcvbn strength meter test. After collecting 10k of these "strong" passwords. We train are TinyLLama LLM to make passwords that can fool password strength meters.
 
 
-## words.txt
-A dataset of the top 10000 most used English words taken from https://github.com/david47k/top-english-wordlists?tab=readme-ov-file
+## password_words.txt
+Uses the most popular passwords in the world GitHub
 
 ## generate_dataset.py
-Creates the training passwords for GPT-2. Just 100 at first, but we can obviously scale it up when needed. Doesn't need to be run everytime you want to generate passwords with GPT-2, it's just for training the llm. 
+Creates the training passwords. Will create passwords till the 10k quota is met.
 
-## password_dataset.txt
-Passwords created by generate_dataset.py. For GPT-2 training only, not running through password meter.
+## train_tinyllama.py
+Tweaks/fine tunes the LLM.
 
-## train_gpt2.py
-Tweaks/fine tunes the GPT-2 model.
+## generate_passwords_tinyllama.py
+This is the main file that generates passwords with TinyLLama and runs it through zxcvbn. 
 
-## generate_passwords.py
-This is the main file that generates passwords with GPT-2 and runs it through zxcvbn. 
+## evaluate.py
+Will compare are dataset of passwords to are trained LLM passwords and display results.
 
 ## Sequence of running files
 
@@ -25,6 +25,8 @@ Run in this order:
 
 ``python3 generate_dataset.py``
 
-``python3 train_gpt2.py``
+``python3 train_tinyllama.py``
 
-``python3 generate_passwords.py``
+``python3 generate_passwords_tinyllama.py``
+
+``python3 evaluate.py —generated (whatever the file name is)``
